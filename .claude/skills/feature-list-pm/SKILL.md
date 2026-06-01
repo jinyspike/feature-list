@@ -63,7 +63,7 @@ digraph placement {
 }
 ```
 
-**原则：** 不过深（文件描述不了完整 feature），不过浅（一个文件太庞大）。目标：每个 feature-list.jsonc 包含 3-20 个 feature。
+**原则：** 不过深（文件描述不了完整 feature），不过浅（一个文件太庞大）。目标：每个 feature-list.jsonc 包含 3-20 个 feature。**不能**放置在根目录下。
 
 ## 操作流程
 
@@ -82,7 +82,7 @@ digraph placement {
 | 原则 | 好 | 坏 |
 |------|----|----|
 | **一个 feature = 一个可验证的用户行为** | "用户可以通过邮箱登录" | "实现登录功能" |
-| **steps 是端到端的** | 从用户操作到可观察结果 | 只描述技术实现 |
+| **steps 是端到端的** | 从用户操作到可观察结果，每一步的用户操作 | 任何有关技术实现，新增/修改些文件，单元测试等 |
 | **title 是自然语言** | "Clicking logout clears session and redirects to login" | "logout handler" |
 | **粒度适中** | 3-8 个 steps | 1 个或 20+ 个 steps |
 
