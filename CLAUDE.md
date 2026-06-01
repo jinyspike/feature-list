@@ -1,6 +1,6 @@
 本项目使用 feature-list.jsonc 管理功能定义与测试追踪。开发新功能时必须遵循以下流程：
 
-1. **需求阶段** — 结合用户所提出的需求，使用 `/feature-list-pm`
+1. **需求阶段** — 结合用户所提出的需求，使用 `/feature-list-pm`。如果正在使用superpower，等完成design (spec) 文件(YYYY-MM-DD-<topic>-design.md)后再使用。
 2. **开发阶段** — 使用 `/feature-list-dev`
 3. **QA 阶段** — 使用 `/feature-list-qa`
 
