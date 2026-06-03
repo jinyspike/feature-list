@@ -1,6 +1,6 @@
 ---
 name: feature-list-fix
-description: Use when code needs fixing, requirements have changed, or you need to modify existing features — BEFORE writing any code changes. This skill ensures feature-list.jsonc stays in sync with reality: it updates the feature list first, clears affected e2e-test-case-name fields, sets passes=false, gets user confirmation, then allows code modifications. Triggers on "fix", "bug fix", "change requirement", "modify feature", "update feature", "something is broken", "需要修改", "有个bug", "需求变了".
+description: "Use when code needs fixing, requirements have changed, or you need to modify existing features — BEFORE writing any code changes. This skill ensures feature-list.jsonc stays in sync with reality: it updates the feature list first, clears affected e2e-test-case-name fields, sets passes=false, gets user confirmation, then allows code modifications. Triggers on \"fix\", \"bug fix\", \"change requirement\", \"modify feature\", \"update feature\", \"something is broken\", \"需要修改\", \"有个bug\", \"需求变了\"."
 ---
 
 # Feature List Fix — 修复与需求变更
