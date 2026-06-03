@@ -1,6 +1,6 @@
 # Feature List Workflow
 
-一个基于 `feature-list.jsonc` 的功能驱动开发工作流，贯穿需求、开发、测试全流程。
+一个基于 `feature-list.jsonc` 的功能驱动开发工作流，贯穿需求、开发、修复、测试全流程。
 
 ## 灵感来源
 
@@ -19,18 +19,27 @@
 
 ## 本项目的实现
 
-我将其思路提炼为三个可复用 skill，分别对应需求的三个阶段：
+我将其思路提炼为三个可复用 skill，分别对应开发流程的三个场景：
 
-| Skill | 阶段 | 职责 |
+| Skill | 场景 | 职责 |
 |---|---|---|
-| `feature-list-pm` | 需求阶段 | 将用户需求拆解为可测试的 feature 条目，写入 `feature-list.jsonc` |
-| `feature-list-dev` | 开发阶段 | TDD 驱动，单元测试标注对应 feature title，开发完成后仍保持 `passes: false` |
-| `feature-list-qa` | QA 阶段 | 设计端到端测试用例，映射到 feature 条目，通过后标记 `passes: true` |
+| `feature-list-new` | 开发新需求 | 定义 feature + TDD 开发，保持 `passes: false` |
+| `feature-list-fix` | 修复/需求变更 | 先更新 feature list，再改代码，重置受影响条目 |
+| `feature-list-verify` | 端到端验证 | 设计 e2e 测试，通过后标记 `passes: true` |
+
+### 工作流程
+
+```
+新需求 → /feature-list-new → 单元测试通过 → /feature-list-verify → 完成
+                                ↑
+修复/变更 → /feature-list-fix → 单元测试通过 → /feature-list-verify → 完成
+```
 
 ### 硬性规则
 
 - **渐进式**：新功能/修改功能必须先有 `feature-list.jsonc` 条目，再写代码
 - **单一信息源**：需求定义、测试追踪、覆盖状态全在一个 `feature-list.jsonc` 文件中
+- **修复先改 list**：修改代码前必须先用 feature-list-fix 更新 feature list
 
 ## 快速开始
 
@@ -42,9 +51,8 @@
 feature-list/
 ├── README.md
 ├── CLAUDE.md                           ← 工作流规则
-└── .claude/
-    └── skills/
-        ├── feature-list-pm/SKILL.md    ← 需求分析 & feature 定义
-        ├── feature-list-dev/SKILL.md   ← TDD 开发
-        └── feature-list-qa/SKILL.md    ← 端到端测试 & 验证
+└── skills/
+    ├── feature-list-new/SKILL.md       ← 新需求：定义 + TDD 开发
+    ├── feature-list-fix/SKILL.md       ← 修复/需求变更：先改 list，再改代码
+    └── feature-list-verify/SKILL.md    ← 端到端验证：e2e 测试 + passes=true
 ```

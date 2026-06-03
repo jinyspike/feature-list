@@ -1,19 +1,19 @@
 ---
-name: feature-list-qa
-description: Use when development is complete (unit tests pass) and e2e test cases need to be designed. Maps e2e tests to feature-list.jsonc entries, ensures coverage, and marks passes=true after e2e tests pass. Triggers on "e2e test", "end to end", "QA", "test coverage for features".
+name: feature-list-verify
+description: Use when development is complete (after feature-list-new or feature-list-fix) and end-to-end tests need to be designed, implemented, and run to verify features work. Designs e2e test cases, maps them to feature-list.jsonc entries, fills e2e-test-case-name, and marks passes=true only after e2e tests pass. Triggers on "verify", "e2e test", "end to end", "QA", "test coverage", "验证", "端到端测试", "e2e 测试".
 ---
 
-# Feature List QA — 端到端测试设计
+# Feature List Verify — 端到端验证
 
 ## Overview
 
-开发完成后（单元测试全部通过），设计端到端测试用例，确保每个 feature 至少被一个 e2e 测试覆盖。**e2e 测试通过后**，回填 `e2e-test-case-name` 并标记 `passes: true`。
+在 feature-list-new 或 feature-list-fix 完成后（单元测试全部通过），设计并运行端到端测试，确保每个 feature 真正在用户视角下可用。**e2e 测试通过后**，回填 `e2e-test-case-name` 并标记 `passes: true`。
 
-**核心原则：** `passes: true` 意味着该 feature 已通过端到端验证，不仅仅是单元测试通过。
+**核心原则：** `passes: true` 意味着该 feature 已通过端到端验证 — 不仅仅是单元测试通过，而是用户能看到、能操作、能得到预期结果。
+
+**前置要求：** 单元测试全部通过，代码已提交。
 
 ## 前置检查
-
-开始 QA 之前，确认：
 
 ```bash
 # 单元测试全部通过
@@ -26,7 +26,7 @@ grep '"passes": false' **/feature-list.jsonc
 ## 工作流程
 
 ```dot
-digraph qa_flow {
+digraph verify_flow {
     rankdir=TB;
     collect [label="1. 收集所有 feature-list.jsonc", shape=box];
     matrix [label="2. 构建 feature 覆盖矩阵", shape=box];
@@ -37,7 +37,7 @@ digraph qa_flow {
     impl [label="7. 实现 e2e 测试", shape=box];
     run [label="8. 运行 e2e 测试", shape=diamond];
     mark [label="9. 标记 passes=true", shape=box];
-    done [label="QA 完成", shape=doublecircle];
+    done [label="验证完成", shape=doublecircle];
 
     collect -> matrix -> design -> map -> check;
     check -> fill [label="全覆盖"];
@@ -202,6 +202,13 @@ npm run test:e2e     # CLI 应用
 ```
 
 **逐个标记：** 哪个 feature 的 e2e 测试通过了就标记哪个，不要批量标记未验证的 feature。
+
+## Red Flags — 停下来
+
+- 跳过 e2e 测试直接标记 `passes: true`
+- 批量标记未验证的 feature
+- e2e 测试没有覆盖 feature-list.jsonc 中的所有 feature
+- `e2e-test-case-name` 为空数组的条目仍然存在
 
 ## 完成标志
 
